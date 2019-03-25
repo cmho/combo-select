@@ -170,12 +170,19 @@
 			 * Append Input
 			 */
 
+	  		var elName = this.$el.attr("name");
+			if (!this.$el.attr('id')) {
+				this.$el.attr('id', 'select-'+elName);
+			}
 			var elId = this.$el.attr('id')
 
       /* Remove id */
-      this.$el.removeAttr('id')
-
-      this.$input = $('<input type="text"' + (isMobile? 'tabindex="-1"': '') + ' placeholder="'+ this.getPlaceholder() +'" class="'+ this.settings.inputClass + '" id="' + elId + '">').appendTo(this.$container)
+      this.$el.removeAttr('id');
+	  var label = $('label[for="'+elName+'"]');
+	  if (label) {
+		  label.attr('id', 'label-'+elName);
+	  }
+      this.$input = $('<input type="text"' + (isMobile? 'tabindex="-1"': '') + ' placeholder="'+ this.getPlaceholder() +'" class="'+ this.settings.inputClass + '" id="' + elId + '"'+(label ? "aria-labelledby='label-"+elName +"'" : '')+'>').appendTo(this.$container)
 
 			/* Update input text */
 
